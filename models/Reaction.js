@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const moment = require('moment');
 
 const reactionSchema = new Schema(
   {
@@ -17,6 +18,12 @@ const reactionSchema = new Schema(
       required: true,
     },
     // use Moment.js to format createdAt data
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      // use a getter method to format the timestamp on query
+      get: (createdAtVal) => moment(createdAtVal).format('MMM Do, YYYY [at] hh:mm a'),
+    },
   },
   {
     toJSON: {
