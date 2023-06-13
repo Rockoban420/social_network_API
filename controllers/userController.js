@@ -41,6 +41,7 @@ module.exports = {
       const updatedUser = await User.findOneAndUpdate(
         { _id: req.params.userId },
         req.body,
+        { new: true }
       );
       !updatedUser
         ? res.status(404).json({ message: 'No user with that ID' })

@@ -18,10 +18,9 @@ const reactionSchema = new Schema(
     },
     // use Moment.js to format createdAt data
     createdAt: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      default: Date(),
       // use a getter method to format the timestamp on query
-      get: (createdAt) => moment(createdAt).format('MMM Do, YYYY [at] hh:mm a'),
     },
   },
   {
@@ -34,10 +33,9 @@ const reactionSchema = new Schema(
 const thoughtSchema = new Schema(
   {
     createdAt: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      default: Date(),
       // use a getter method to format the timestamp on query
-      get: (createdAt) => moment(createdAt).format('MMM Do, YYYY [at] hh:mm a'),
     },
     username: {
       type: String,
@@ -63,10 +61,6 @@ const thoughtSchema = new Schema(
 
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
-});
-
-thoughtSchema.virtual('timeFormat').get(function () {
-  return moment(this.createdAt).format('MMM Do, YYYY [at] hh:mm a');
 });
 
 
