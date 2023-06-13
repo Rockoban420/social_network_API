@@ -1,14 +1,28 @@
 const router = require('express').Router();
 const {
-  getTags,
-  getSingleTag,
-  createTag,
+  getUsers,
+  getSingleUser,
+  createUser,
+  updateUser,
+  deleteUser,
+  addFriend,
+  removeFriend,
 } = require('../../controllers/userController');
 
-// /api/tags
-router.route('/').get(getTags).post(createTag);
+// /api/users
+router.route('/')
+        .get(getUsers)
+        .post(createUser);
 
-// /api/tags/:tagId
-router.route('/:tagId').get(getSingleTag);
+// /api/users/:userId
+router.route('/:userId')
+        .get(getSingleUser)
+        .put(updateUser)
+        .delete(deleteUser);
+
+// /api/users/:userId/friends/:friendId
+router.route('/:userId/friends/:friendId')
+        .post(addFriend)
+        .delete(removeFriend);
 
 module.exports = router;

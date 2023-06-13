@@ -4,7 +4,7 @@ module.exports = {
   async getUsers(req, res) {
     try {
       const users = await User.find();
-      res.json(users);
+      res.status(200).json(users);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error getting users: ', err);
@@ -15,7 +15,7 @@ module.exports = {
       const user = await User.findOne({ _id: req.params.userId });
       !user
         ? res.status(404).json({ message: 'No user with that ID' })
-        : res.json(user);
+        : res.status(200).json(user);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error Finding this user', err);
@@ -24,13 +24,12 @@ module.exports = {
   // create a new tag
   async createUser(req, res) {
     try {
-      const newUser = User.create(req.body);
-
+      const newUser = await User.create(req.body);
       !newUser
         ? res
           .status(404)
           .json({ message: 'User creation unsucessfull. Username and Email Required' })
-        : res.json(newUser, "User Created");
+        : res.status(200).json(newUser);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error creating user: ', err);
@@ -45,7 +44,7 @@ module.exports = {
       );
       !updatedUser
         ? res.status(404).json({ message: 'No user with that ID' })
-        : res.json(updatedUser, "User Updated");
+        : res.status(200).json(updatedUser);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error updating user: ', err);
@@ -57,7 +56,7 @@ module.exports = {
       const deletedUser = await User.findOneAndDelete({ _id: req.params.userId });
       !deletedUser
         ? res.status(404).json({ message: 'No user with that ID' })
-        : res.json(deletedUser, "User Deleted");
+        : res.status(200).json(deletedUser);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error deleting user: ', err);
@@ -73,7 +72,7 @@ module.exports = {
       );
       !newFriend
         ? res.status(404).json({ message: 'No user with that ID' })
-        : res.json(newFriend, "Friend Added");
+        : res.status(200).json(newFriend);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error adding friend: ', err);
@@ -89,7 +88,7 @@ module.exports = {
       );
       !removedFriend
         ? res.status(404).json({ message: 'No user with that ID' })
-        : res.json(removedFriend, "Friend Removed");
+        : res.status(200).json(removedFriend);
     } catch (err) {
       console.log(err);
       res.status(500).json('Error removing friend: ', err);

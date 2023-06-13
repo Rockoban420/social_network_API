@@ -1,24 +1,50 @@
 const { Schema, model } = require('mongoose');
 const moment = require('moment');
 
-// Schema to create Post model
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    // use Moment.js to format createdAt data
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      // use a getter method to format the timestamp on query
+      get: (createdAt) => moment(createdAt).format('MMM Do, YYYY [at] hh:mm a'),
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
+
 const thoughtSchema = new Schema(
   {
     createdAt: {
       type: Date,
       default: Date.now,
       // use a getter method to format the timestamp on query
-      get: (createdAtVal) => moment(createdAtVal).format('MMM Do, YYYY [at] hh:mm a'),
+      get: (createdAt) => moment(createdAt).format('MMM Do, YYYY [at] hh:mm a'),
     },
     username: {
       type: String,
       required: true,
     },
     reactions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Reaction',
-      },
+      reactionSchema,
     ],
     text: {
       type: String,
@@ -45,6 +71,6 @@ thoughtSchema.virtual('timeFormat').get(function () {
 
 
 // Initialize our Post model
-const Thought = model('though', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;

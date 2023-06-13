@@ -1,7 +1,7 @@
 {
-  "name": "24-Stu_Subdoc-Population",
+  "name": "Social Networ Api",
   "version": "1.0.1",
-  "description": "Student activity for populating subdocs",
+  "description": "Social Network API",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
